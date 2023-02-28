@@ -68,6 +68,6 @@ Aşağıdaki şemayı karşılamak için `data/migrations/01-make_cars_table.js`
 
 ### Görev 3: Esnek Görevler
 
-- `Knex seed` kullanarak veritabanına seed verisi ekleyin
-- API'nize "[PUT]" ve "[DELETE]" işlemlerini ekleyin.
-- "Satış" tablosu için bir şema dosyası yazın. Bu tablo, her arabanın satışına ilişkin bilgileri izlemelidir. Her satışı, satılan `arabalar` girişine bağlamak için `foreign keys`ı araştırmak isteyebilirsiniz.
+- `Knex seed` kullanarak veritabanına seed verisi ekleyin...
+- API'nize "[PUT]" ve "[DELETE]" işlemlerini ekleyin...
+- "Satış" tablosu için bir şema dosyası yazın. Bu tablo, her arabanın satışına ilişkin bilgileri izlemelidir. Her satışı, satılan `arabalar` girişine bağlamak için `foreign keys`ı araştırmak isteyebilirsiniz...
