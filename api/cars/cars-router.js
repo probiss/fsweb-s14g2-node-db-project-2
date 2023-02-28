@@ -20,10 +20,10 @@ router.get("/:id", askim.checkCarId, async (req, res, next) => {
     }
 });
 
-router.post("/", askim.checkCarPayload, askim.checkVinNumberUnique,async (req, res, next) => {
+router.post("/", askim.checkCarPayload, askim.checkVinNumberValid, askim.checkVinNumberUnique,async (req, res, next) => {
     try {
         let insertData = await basGaza.create(req.body);
-        res.status(201).json(insertData);
+        res.json(insertData);
     } catch (err) {
         next(err);
     }

@@ -6,13 +6,13 @@ const checkCarId = async (req, res, next) => {
     const carId = req.params.id;
     const car = await Car.getById(carId);
     if (!car) {
-      return res.status(404).json({ message: `${carId} kimliğine sahip araba bulunamadı` });
+      res.status(404).json({ message: `${carId} kimliğine sahip araba bulunamadı` });
     } else {
       req.car = car;
       next();
     }
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -39,22 +39,26 @@ const checkVinNumberValid = (req, res, next) => {
   const vin = req.body.vin;
 
   if (vin && !vinValidator.validate(vin)) {
-    return res.status(400).json({ message: `vin ${vin} geçersizdir` });
+    res.status(400).json({ message: `vin ${vin} is invalid` });
   }
 
   next();
 }
 
 const checkVinNumberUnique = async (req, res, next) => {
-  const vin = req.body.vin;
-  const car = await Car.create({ vin: vin });
-
-  if (car) {
-    return res.status(400).json({ message: `vin ${vin} zaten var` });
+  try {
+    let mySons = await Car.getAll();
+    const { vin } = req.body;
+    let isValidVin = mySons.every((car) => car.vin !== vin);
+    if (!isValidVin) {
+      res.status(400).json({ message: `vin ${vin} already exists` });
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
   }
-
-  next();
-}
+};
 
 module.exports = {
   checkCarId,
