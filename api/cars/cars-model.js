@@ -11,8 +11,8 @@ const getById = (id) => {
 const create = (car) => {
   const insertedCar = db("cars")
     .insert(car)
-    .then((ids) => {
-      return getById(ids[0]);
+    .then((id) => {
+      return getById(id[0]);
     });
   return insertedCar;
 }

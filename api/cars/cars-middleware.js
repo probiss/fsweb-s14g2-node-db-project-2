@@ -16,32 +16,32 @@ const checkCarId = async (req, res, next) => {
   }
 };
 
-const checkCarPayload = (req, res, next) => {
-
-  const { make, model, vin, mileage } = req.body;
-
-  if (!make) {
-    return res.status(400).json({ message: "make is missing" });
+const checkCarPayload = async (req, res, next) => {
+  try {
+    const fields = ["vin", "make", "model", "mileage"]; //doldurulması zorunlu olan alanları array e aldık.
+    const missedFields = []; //doldurulmayan alanların pushlanması için boş bir array oluşturduk.
+    fields.forEach((field) => {
+      if (!req.body[field]) {
+        //tek tek req.body.vin ve diğerline bakıyor
+        missedFields.push(field); //boş olanları array'e pushluyor.
+      }
+    });
+    if (missedFields.length > 0) {
+      let missedFieldsStr = missedFields.join();
+      res.status(400).json({ message: `${missedFieldsStr} is missing` });
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
   }
-  if (!model) {
-    return res.status(400).json({ message: "model is missing" });
-  }
-  if (!vin) {
-    return res.status(400).json({ message: "vin is missing" });
-  }
-  if (!mileage) {
-    return res.status(400).json({ message: "mileage is missing" });
-  }
-  next();
 };
 
 const checkVinNumberValid = (req, res, next) => {
   const vin = req.body.vin;
-
   if (vin && !vinValidator.validate(vin)) {
     res.status(400).json({ message: `vin ${vin} is invalid` });
   }
-
   next();
 }
 

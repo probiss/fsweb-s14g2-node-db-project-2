@@ -1,5 +1,6 @@
-exports.seed = async function(knex) {
-    await knex('cars').insert([
+
+
+const myCars = [
         {
             vin:'01', 
             make:'Mitsubishi',
@@ -32,5 +33,9 @@ exports.seed = async function(knex) {
             title:'Hatıralar...',
             transmission:'Otomatik'
         }
-    ]);
-};
+    ];
+
+    exports.seed = async function (knex){
+        await knex("cars").truncate();
+        await knex("cars").insert(myCars);
+    }
